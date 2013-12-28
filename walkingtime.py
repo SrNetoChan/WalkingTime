@@ -50,7 +50,7 @@ class WalkingTime:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = WtPluginDialog()
+        self.dlg = WtPluginDialog(iface)
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -71,73 +71,8 @@ class WalkingTime:
 
     # run method that performs all the real work
     def run(self):
-        mc = self.iface.mapCanvas()
-        legend=self.iface.legendInterface()
-        loaded_layers = legend.layers()
         #show the dialog
         self.dlg.show()
         # Run the dialog event loop
         result = self.dlg.exec_()
-        # See if OK was pressed
-        if result == 1:
-                # do something useful (delete the line containing pass and
-                # substitute with your code)
-            
-    #FIX        # Adicionar mecanismo de escolha de layers
-            line_vlayer = loaded_layers[0]
-            elevation_rlayer = loaded_layers[1]
-            
-            # adicionar campos tempo_min e distancia caso necessário
-            # FIX ME
-            
-            #Identify the index number of the fields
-            time_field_idx = line_vlayer.pendingFields().indexFromName('tempo')
-            invers_time_field_idx = line_vlayer.pendingFields().indexFromName('tempo_inv')
-            distance_idx = line_vlayer.pendingFields().indexFromName('dist')
-            ascend_idx = line_vlayer.pendingFields().indexFromName('sub_acum')
-            descend_idx = line_vlayer.pendingFields().indexFromName('desc_acum')
-            
-            if line_vlayer.selectedFeatureCount () > 0:
-                features = line_vlayer.selectedFeatures()
-            else:
-                features =line_vlayer.getFeatures()
-            
-            for feature in features:
-                geom =  feature.geometry()
-                attributes = feature.attributes()
-                attributes[distance_idx] = geom.length()
-                attributes[time_field_idx], attributes[invers_time_field_idx], attributes[ascend_idx], attributes[descend_idx]   = timeCalc(geom, elevation_rlayer)
-                feature.setAttributes(attributes)
-                line_vlayer.updateFeature(feature)
-    
-def timeCalc(geom, rlayer):
-    # FIX - read interval from raster layer (size of the cells)
-    interval = 25.0
-    distance = 0
-    time = 0
-    inverse_time = 0
-    ascend = 0
-    descend = 0
-    while distance <= geom.length():
-        point = geom.interpolate(distance).asPoint()
-        point_to_raster = rlayer.dataProvider().identify(point, QgsRaster.IdentifyFormatValue)
-        elevation = point_to_raster.results()[1]
-        if distance > 0:
-            dh = elevation - last_elevation
-            if dh > 0:
-                ascend += dh
-            else:
-                descend += dh
-            time += interval / tobblerHikingFunction(interval,dh) * 60 / 1000
-            inverse_time += interval / tobblerHikingFunction(interval,-dh) * 60 / 1000
-        #print time
-        
-        last_elevation = elevation
-        distance += interval
-        
-    #MUST FIX
-    return time, inverse_time,  ascend,  descend
 
-# FIX use base velocity as argument
-def tobblerHikingFunction (dx,dh):
-    return 5 * exp(-3.5 * abs(dh/dx + 0.05))
