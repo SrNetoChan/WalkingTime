@@ -27,7 +27,7 @@ from math import *
 # Initialize Qt resources from file resources.py
 import resources_rc
 # Import the code for the dialog
-# from walkingtimedialog import WalkingTimeDialog
+from ui_walkingtime import WtPluginDialog
 import os.path
 
 
@@ -50,7 +50,7 @@ class WalkingTime:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        # self.dlg = WalkingTimeDialog()
+        self.dlg = WtPluginDialog()
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -74,10 +74,10 @@ class WalkingTime:
         mc = self.iface.mapCanvas()
         legend=self.iface.legendInterface()
         loaded_layers = legend.layers()
-        # show the dialog
-        #self.dlg.show()
+        #show the dialog
+        self.dlg.show()
         # Run the dialog event loop
-        #result = self.dlg.exec_()
+        result = self.dlg.exec_()
         # See if OK was pressed
         #if result == 1:
             # do something useful (delete the line containing pass and
