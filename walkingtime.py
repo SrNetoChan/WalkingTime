@@ -50,7 +50,7 @@ class WalkingTime:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = WtPluginDialog(iface)
+        # self.dlg = WtPluginDialog(iface)
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -72,7 +72,8 @@ class WalkingTime:
     # run method that performs all the real work
     def run(self):
         #show the dialog
-        self.dlg.show()
+        # self.dlg.show()
+        self.dlg = WtPluginDialog(self.iface)
         # Run the dialog event loop
         result = self.dlg.exec_()
 
