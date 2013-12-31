@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/data/Dropbox/Trabalho/QGIS/Plugins-QGIS/WalkingTime/ui_walkingtime.ui'
 #
-# Created: Sat Dec 28 14:52:16 2013
+# Created: Tue Dec 31 14:54:07 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -58,6 +58,8 @@ class Ui_WalkingTime(object):
         sizePolicy.setHeightForWidth(self.doubleSpinBox_base_velocity.sizePolicy().hasHeightForWidth())
         self.doubleSpinBox_base_velocity.setSizePolicy(sizePolicy)
         self.doubleSpinBox_base_velocity.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.doubleSpinBox_base_velocity.setSingleStep(0.1)
+        self.doubleSpinBox_base_velocity.setProperty("value", 4.5)
         self.doubleSpinBox_base_velocity.setObjectName(_fromUtf8("doubleSpinBox_base_velocity"))
         self.gridLayout_3.addWidget(self.doubleSpinBox_base_velocity, 0, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_3_parameters, 1, 0, 1, 2)
@@ -76,7 +78,7 @@ class Ui_WalkingTime(object):
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.gridLayout_2.addWidget(self.label_4, 2, 0, 1, 1)
         self.radioButton_new_fields = QtGui.QRadioButton(self.groupBox_2_outputs)
-        self.radioButton_new_fields.setEnabled(False)
+        self.radioButton_new_fields.setEnabled(True)
         self.radioButton_new_fields.setObjectName(_fromUtf8("radioButton_new_fields"))
         self.gridLayout_2.addWidget(self.radioButton_new_fields, 3, 0, 1, 2)
         self.label_6 = QtGui.QLabel(self.groupBox_2_outputs)
