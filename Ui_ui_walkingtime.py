@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/data/Dropbox/Trabalho/QGIS/Plugins-QGIS/WalkingTime/ui_walkingtime.ui'
+# Form implementation generated from reading ui file 'C:\Users\alexandre.neto\Dropbox\Trabalho\Plugins QGIS\WalkingTime\ui_walkingtime.ui'
 #
-# Created: Tue Dec 31 14:54:07 2013
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Thu Jan 02 17:05:50 2014
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,39 +12,52 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_WalkingTime(object):
     def setupUi(self, WalkingTime):
         WalkingTime.setObjectName(_fromUtf8("WalkingTime"))
-        WalkingTime.resize(340, 474)
-        self.layoutWidget = QtGui.QWidget(WalkingTime)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 12, 321, 452))
-        self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
-        self.gridLayout_4 = QtGui.QGridLayout(self.layoutWidget)
-        self.gridLayout_4.setMargin(0)
+        WalkingTime.resize(320, 396)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(WalkingTime.sizePolicy().hasHeightForWidth())
+        WalkingTime.setSizePolicy(sizePolicy)
+        WalkingTime.setSizeGripEnabled(False)
+        self.gridLayout_5 = QtGui.QGridLayout(WalkingTime)
+        self.gridLayout_5.setObjectName(_fromUtf8("gridLayout_5"))
+        self.gridLayout_4 = QtGui.QGridLayout()
         self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
-        self.groupBox_inputs = QtGui.QGroupBox(self.layoutWidget)
+        self.groupBox_inputs = QtGui.QGroupBox(WalkingTime)
         self.groupBox_inputs.setObjectName(_fromUtf8("groupBox_inputs"))
         self.gridLayout = QtGui.QGridLayout(self.groupBox_inputs)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.label = QtGui.QLabel(self.groupBox_inputs)
-        self.label.setObjectName(_fromUtf8("label"))
-        self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
         self.comboBox_elevation_layer = QtGui.QComboBox(self.groupBox_inputs)
         self.comboBox_elevation_layer.setObjectName(_fromUtf8("comboBox_elevation_layer"))
         self.gridLayout.addWidget(self.comboBox_elevation_layer, 2, 1, 1, 1)
-        self.comboBox_line_layer = QtGui.QComboBox(self.groupBox_inputs)
-        self.comboBox_line_layer.setObjectName(_fromUtf8("comboBox_line_layer"))
-        self.gridLayout.addWidget(self.comboBox_line_layer, 1, 1, 1, 1)
+        self.label = QtGui.QLabel(self.groupBox_inputs)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
         self.label_2 = QtGui.QLabel(self.groupBox_inputs)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayout.addWidget(self.label_2, 2, 0, 1, 1)
         self.checkBox_selected_features_only = QtGui.QCheckBox(self.groupBox_inputs)
         self.checkBox_selected_features_only.setObjectName(_fromUtf8("checkBox_selected_features_only"))
         self.gridLayout.addWidget(self.checkBox_selected_features_only, 0, 0, 1, 2)
+        self.comboBox_line_layer = QtGui.QComboBox(self.groupBox_inputs)
+        self.comboBox_line_layer.setObjectName(_fromUtf8("comboBox_line_layer"))
+        self.gridLayout.addWidget(self.comboBox_line_layer, 1, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_inputs, 0, 0, 1, 2)
-        self.groupBox_3_parameters = QtGui.QGroupBox(self.layoutWidget)
+        self.groupBox_3_parameters = QtGui.QGroupBox(WalkingTime)
         self.groupBox_3_parameters.setObjectName(_fromUtf8("groupBox_3_parameters"))
         self.gridLayout_3 = QtGui.QGridLayout(self.groupBox_3_parameters)
         self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
@@ -59,11 +72,11 @@ class Ui_WalkingTime(object):
         self.doubleSpinBox_base_velocity.setSizePolicy(sizePolicy)
         self.doubleSpinBox_base_velocity.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.doubleSpinBox_base_velocity.setSingleStep(0.1)
-        self.doubleSpinBox_base_velocity.setProperty("value", 4.5)
+        self.doubleSpinBox_base_velocity.setProperty("value", 5.0)
         self.doubleSpinBox_base_velocity.setObjectName(_fromUtf8("doubleSpinBox_base_velocity"))
         self.gridLayout_3.addWidget(self.doubleSpinBox_base_velocity, 0, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_3_parameters, 1, 0, 1, 2)
-        self.groupBox_2_outputs = QtGui.QGroupBox(self.layoutWidget)
+        self.groupBox_2_outputs = QtGui.QGroupBox(WalkingTime)
         self.groupBox_2_outputs.setObjectName(_fromUtf8("groupBox_2_outputs"))
         self.gridLayout_2 = QtGui.QGridLayout(self.groupBox_2_outputs)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
@@ -114,36 +127,45 @@ class Ui_WalkingTime(object):
         self.lineEdit_time_field_name.setObjectName(_fromUtf8("lineEdit_time_field_name"))
         self.gridLayout_2.addWidget(self.lineEdit_time_field_name, 4, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_2_outputs, 2, 0, 1, 2)
-        self.pushButton_help = QtGui.QPushButton(self.layoutWidget)
+        self.pushButton_help = QtGui.QPushButton(WalkingTime)
         self.pushButton_help.setObjectName(_fromUtf8("pushButton_help"))
         self.gridLayout_4.addWidget(self.pushButton_help, 3, 0, 1, 1)
-        self.buttonBox_ok_cancel = QtGui.QDialogButtonBox(self.layoutWidget)
+        self.buttonBox_ok_cancel = QtGui.QDialogButtonBox(WalkingTime)
         self.buttonBox_ok_cancel.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox_ok_cancel.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox_ok_cancel.setObjectName(_fromUtf8("buttonBox_ok_cancel"))
         self.gridLayout_4.addWidget(self.buttonBox_ok_cancel, 3, 1, 1, 1)
+        self.gridLayout_5.addLayout(self.gridLayout_4, 0, 0, 1, 1)
 
         self.retranslateUi(WalkingTime)
         QtCore.QObject.connect(self.buttonBox_ok_cancel, QtCore.SIGNAL(_fromUtf8("accepted()")), WalkingTime.accept)
         QtCore.QObject.connect(self.buttonBox_ok_cancel, QtCore.SIGNAL(_fromUtf8("rejected()")), WalkingTime.reject)
+        QtCore.QObject.connect(self.radioButton_update_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_3.setEnabled)
+        QtCore.QObject.connect(self.radioButton_update_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.comboBox_time_field.setEnabled)
+        QtCore.QObject.connect(self.radioButton_update_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_4.setEnabled)
+        QtCore.QObject.connect(self.radioButton_update_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.comboBox_rev_time_field.setEnabled)
+        QtCore.QObject.connect(self.radioButton_new_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_6.setEnabled)
+        QtCore.QObject.connect(self.radioButton_new_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.lineEdit_time_field_name.setEnabled)
+        QtCore.QObject.connect(self.radioButton_new_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_7.setEnabled)
+        QtCore.QObject.connect(self.radioButton_new_fields, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.lineEdit_rev_time_field_name.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(WalkingTime)
 
     def retranslateUi(self, WalkingTime):
-        WalkingTime.setWindowTitle(QtGui.QApplication.translate("WalkingTime", "WalkingTime", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_inputs.setTitle(QtGui.QApplication.translate("WalkingTime", "Inputs", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("WalkingTime", "Line Layer", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("WalkingTime", "Elevation raster layer", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBox_selected_features_only.setText(QtGui.QApplication.translate("WalkingTime", "Use only selected features", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3_parameters.setTitle(QtGui.QApplication.translate("WalkingTime", "Parameters", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("WalkingTime", "Plain velocity (km\\ h)", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2_outputs.setTitle(QtGui.QApplication.translate("WalkingTime", "Output", None, QtGui.QApplication.UnicodeUTF8))
-        self.radioButton_update_fields.setText(QtGui.QApplication.translate("WalkingTime", "Update fields", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("WalkingTime", "Time", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("WalkingTime", "Reverse time", None, QtGui.QApplication.UnicodeUTF8))
-        self.radioButton_new_fields.setText(QtGui.QApplication.translate("WalkingTime", "Create new fields", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("WalkingTime", "Time", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("WalkingTime", "Reverse time", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_help.setText(QtGui.QApplication.translate("WalkingTime", "Help", None, QtGui.QApplication.UnicodeUTF8))
+        WalkingTime.setWindowTitle(_translate("WalkingTime", "WalkingTime", None))
+        self.groupBox_inputs.setTitle(_translate("WalkingTime", "Inputs", None))
+        self.label.setText(_translate("WalkingTime", "Line Layer", None))
+        self.label_2.setText(_translate("WalkingTime", "Elevation raster layer", None))
+        self.checkBox_selected_features_only.setText(_translate("WalkingTime", "Use only selected features", None))
+        self.groupBox_3_parameters.setTitle(_translate("WalkingTime", "Parameters", None))
+        self.label_5.setText(_translate("WalkingTime", "Flat terrain velocity (km\\ h)", None))
+        self.groupBox_2_outputs.setTitle(_translate("WalkingTime", "Output", None))
+        self.radioButton_update_fields.setText(_translate("WalkingTime", "Update fields", None))
+        self.label_3.setText(_translate("WalkingTime", "Time", None))
+        self.label_4.setText(_translate("WalkingTime", "Reverse time", None))
+        self.radioButton_new_fields.setText(_translate("WalkingTime", "Create new fields", None))
+        self.label_6.setText(_translate("WalkingTime", "Time", None))
+        self.label_7.setText(_translate("WalkingTime", "Reverse time", None))
+        self.pushButton_help.setText(_translate("WalkingTime", "Help", None))
 
 
 if __name__ == "__main__":
