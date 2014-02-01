@@ -43,29 +43,46 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
         #self.repaint()
    
     def get_useful_layers(self):
+        """
+        Purpose: iterate the map legend and return a list of line vector layers (with fields)
+        and a list of raster layers.
+        vector_line_layers is like {Layer1name:[Layer 1,[fileld1, field2, ...]], Layer2Name: [Layer 2,[fileld1, field2, ...]],...}
+        
+        """
         self.vector_line_layers = {}
         self.raster_layers = {}
+        
         for i in range(len(self.loaded_layers)):
             layer = self.loaded_layers[i]
             fields_names = []
-            # Select line vector layers
+            # select line vector layers
+
             if (layer.type() == layer.VectorLayer) and (layer.geometryType() == QGis.Line):
                 layer_info = [layer]
                 provider = layer.dataProvider()
                 fields = provider.fields()
+                # get vector layer fields
                 for j in range(len(fields)):
                     fields_names.append(fields[j].name())
                 layer_info += [fields_names]
                 self.vector_line_layers[unicode(layer.name())] = layer_info
+            # select raster layers
+            
             elif layer.type() == layer.RasterLayer:
                 self.raster_layers[unicode(layer.name())] = layer
+            
             else:
                 pass
+        
         vector_line_layers = list(self.vector_line_layers)
         raster_layers =list(self.raster_layers)
+        
         return vector_line_layers,  raster_layers
     
     def update_fields(self):
+        """
+        Purpose: refresh list of available fields in update fields
+        """
         self.comboBox_time_field.clear()
         self.comboBox_rev_time_field.clear()
         line_layer_fields = self.vector_line_layers[self.comboBox_line_layer.currentText()][1]
@@ -80,10 +97,23 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
         line_vlayer = self.vector_line_layers[self.comboBox_line_layer.currentText()][0]
         elevation_rlayer = self.raster_layers[self.comboBox_elevation_layer.currentText()]
     
-        # use fields according to dialog comboboxes
-        # FIX ME - implement the new fields option
-        time_field_idx = self.comboBox_time_field.currentIndex()
-        invers_time_field_idx = self.comboBox_rev_time_field.currentIndex()
+        # Verify if user wants to use existing fields or new fields
+        if self.radioButton_update_fields. isChecked():
+            time_field_idx = self.comboBox_time_field.currentIndex()
+            invers_time_field_idx = self.comboBox_rev_time_field.currentIndex()
+        else:
+            # Create new fields in vector layer
+            caps = line_vlayer.dataProvider().capabilities()
+            if caps & QgsVectorDataProvider.AddAttributes:
+                new_fields = [  QgsField(self.lineEdit_time_field_name.text(), QVariant.Double, "double", 20,  2), 
+                                        QgsField(self.lineEdit_rev_time_field_name.text(), QVariant.Double, "double",  20,  2)]
+                res =  line_vlayer.dataProvider().addAttributes(new_fields)
+                line_vlayer.updateFields()
+                n_fields = line_vlayer.dataProvider().fields().count()
+                time_field_idx = n_fields - 2
+                invers_time_field_idx = n_fields - 1
+            else:
+                print "Upss"
         
         # Future development add ascend and descend accumulations and "vertical" distance calculation
         #distance_idx = line_vlayer.pendingFields().indexFromName('dist')
