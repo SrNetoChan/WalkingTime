@@ -1,7 +1,24 @@
 # -*- coding: utf-8 -*-
 
 """
-Module implementing WtPluginDialog.
+/***************************************************************************
+ Walking Time
+                                 A QGIS plugin
+ Module implementing WtPluginDialog. The Dialog for Walking time plugin.
+                              -------------------
+        begin                : 2013-09-27
+        copyright          : (C) 2013 by Alexandre Neto / Cascais Ambiente
+        email                : alexandre.neto@cascaisambiente.pt
+ ***************************************************************************/
+
+****************************************************************************
+ *                                                                                                                   *
+ *   This program is free software; you can redistribute it and/or modify      *
+ *   it under the terms of the GNU General Public License as published by   *
+ *   the Free Software Foundation; either version 2 of the License, or           *
+ *   (at your option) any later version.                                                           *
+ *                                                                                                                   *
+ ***************************************************************************
 """
 
 from PyQt4.QtGui import *
@@ -88,6 +105,14 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
         line_layer_fields = self.vector_line_layers[self.comboBox_line_layer.currentText()][1]
         self.comboBox_time_field.addItems(line_layer_fields)
         self.comboBox_rev_time_field.addItems(line_layer_fields)
+        
+        # auto select time and time_rev fields if they exist
+        if 'time' in line_layer_fields:
+            index = line_layer_fields.index('time')
+            self.comboBox_time_field.setCurrentIndex(index)
+        if 'time_rev' in line_layer_fields:
+            index = line_layer_fields.index('time_rev')
+            self.comboBox_rev_time_field.setCurrentIndex(index)
     
     def run(self):
         pass

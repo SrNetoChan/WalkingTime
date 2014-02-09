@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\alexandre.neto\Dropbox\Trabalho\Plugins QGIS\WalkingTime\ui_walkingtime.ui'
+# Form implementation generated from reading ui file '/home/alexandre/Dropbox/Trabalho/QGIS/Plugins-QGIS/WalkingTime/ui_walkingtime.ui'
 #
-# Created: Thu Jan 02 17:05:50 2014
-#      by: PyQt4 UI code generator 4.10.2
+# Created: Sun Feb  9 19:21:28 2014
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,21 +12,12 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_WalkingTime(object):
     def setupUi(self, WalkingTime):
         WalkingTime.setObjectName(_fromUtf8("WalkingTime"))
-        WalkingTime.resize(320, 396)
+        WalkingTime.resize(303, 470)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -54,6 +45,11 @@ class Ui_WalkingTime(object):
         self.checkBox_selected_features_only.setObjectName(_fromUtf8("checkBox_selected_features_only"))
         self.gridLayout.addWidget(self.checkBox_selected_features_only, 0, 0, 1, 2)
         self.comboBox_line_layer = QtGui.QComboBox(self.groupBox_inputs)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboBox_line_layer.sizePolicy().hasHeightForWidth())
+        self.comboBox_line_layer.setSizePolicy(sizePolicy)
         self.comboBox_line_layer.setObjectName(_fromUtf8("comboBox_line_layer"))
         self.gridLayout.addWidget(self.comboBox_line_layer, 1, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_inputs, 0, 0, 1, 2)
@@ -151,21 +147,23 @@ class Ui_WalkingTime(object):
         QtCore.QMetaObject.connectSlotsByName(WalkingTime)
 
     def retranslateUi(self, WalkingTime):
-        WalkingTime.setWindowTitle(_translate("WalkingTime", "WalkingTime", None))
-        self.groupBox_inputs.setTitle(_translate("WalkingTime", "Inputs", None))
-        self.label.setText(_translate("WalkingTime", "Line Layer", None))
-        self.label_2.setText(_translate("WalkingTime", "Elevation raster layer", None))
-        self.checkBox_selected_features_only.setText(_translate("WalkingTime", "Use only selected features", None))
-        self.groupBox_3_parameters.setTitle(_translate("WalkingTime", "Parameters", None))
-        self.label_5.setText(_translate("WalkingTime", "Flat terrain velocity (km\\ h)", None))
-        self.groupBox_2_outputs.setTitle(_translate("WalkingTime", "Output", None))
-        self.radioButton_update_fields.setText(_translate("WalkingTime", "Update fields", None))
-        self.label_3.setText(_translate("WalkingTime", "Time", None))
-        self.label_4.setText(_translate("WalkingTime", "Reverse time", None))
-        self.radioButton_new_fields.setText(_translate("WalkingTime", "Create new fields", None))
-        self.label_6.setText(_translate("WalkingTime", "Time", None))
-        self.label_7.setText(_translate("WalkingTime", "Reverse time", None))
-        self.pushButton_help.setText(_translate("WalkingTime", "Help", None))
+        WalkingTime.setWindowTitle(QtGui.QApplication.translate("WalkingTime", "WalkingTime", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_inputs.setTitle(QtGui.QApplication.translate("WalkingTime", "Inputs", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("WalkingTime", "Line Layer", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("WalkingTime", "Elevation raster layer", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkBox_selected_features_only.setText(QtGui.QApplication.translate("WalkingTime", "Use only selected features", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_3_parameters.setTitle(QtGui.QApplication.translate("WalkingTime", "Parameters", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("WalkingTime", "Flat terrain velocity (km\\ h)", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2_outputs.setTitle(QtGui.QApplication.translate("WalkingTime", "Output", None, QtGui.QApplication.UnicodeUTF8))
+        self.radioButton_update_fields.setText(QtGui.QApplication.translate("WalkingTime", "Update fields", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("WalkingTime", "Time", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("WalkingTime", "Reverse time", None, QtGui.QApplication.UnicodeUTF8))
+        self.radioButton_new_fields.setText(QtGui.QApplication.translate("WalkingTime", "Create new fields", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("WalkingTime", "Time", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("WalkingTime", "Reverse time", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit_rev_time_field_name.setText(QtGui.QApplication.translate("WalkingTime", "rev_time", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit_time_field_name.setText(QtGui.QApplication.translate("WalkingTime", "time", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_help.setText(QtGui.QApplication.translate("WalkingTime", "Help", None, QtGui.QApplication.UnicodeUTF8))
 
 
 if __name__ == "__main__":

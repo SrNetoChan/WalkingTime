@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- WalkingTime
+ Walking Time
                                  A QGIS plugin
- Adds walking time fields to linestring vector layer, based on slope derived from an elevation raster
+ Calculates walking time and other trails values into fields in a  linestring
+ vector layer, based on slope derived from an elevation raster
                               -------------------
         begin                : 2013-09-27
-        copyright            : (C) 2013 by Alexandre Neto / Cascais Ambiente
+        copyright          : (C) 2013 by Alexandre Neto / Cascais Ambiente
         email                : alexandre.neto@cascaisambiente.pt
  ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+****************************************************************************
+ *                                                                                                                   *
+ *   This program is free software; you can redistribute it and/or modify      *
+ *   it under the terms of the GNU General Public License as published by   *
+ *   the Free Software Foundation; either version 2 of the License, or           *
+ *   (at your option) any later version.                                                           *
+ *                                                                                                                   *
+ ***************************************************************************
 """
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import *
@@ -83,9 +84,14 @@ class WalkingTime:
             pass
 
          # use layers according to dialog comboboxes
-        line_vlayer = self.dlg.vector_line_layers[self.dlg.comboBox_line_layer.currentText()][0]
-        elevation_rlayer = self.dlg.raster_layers[self.dlg.comboBox_elevation_layer.currentText()]
-    
+        self.line_vlayer = self.dlg.vector_line_layers[self.dlg.comboBox_line_layer.currentText()][0]
+        self.elevation_rlayer = self.dlg.raster_layers[self.dlg.comboBox_elevation_layer.currentText()]
+        line_vlayer = self.line_vlayer
+        elevation_rlayer = self.elevation_rlayer
+        
+        # get sampling interval from average pixel size of the elevation raster
+        self.interval = self.rasterMeanPixelSize(elevation_rlayer)
+        
         # Verify if user wants to use existing fields or new fields
         if self.dlg.radioButton_update_fields.isChecked():
             time_field_idx = self.dlg.comboBox_time_field.currentIndex()
@@ -123,28 +129,26 @@ class WalkingTime:
             attributes = feature.attributes()
             #attributes[distance_idx] = geom.length()
             #attributes[time_field_idx], attributes[invers_time_field_idx], attributes[ascend_idx], attributes[descend_idx] = self.timeCalc(geom, elevation_rlayer)
-            attributes[time_field_idx], attributes[invers_time_field_idx] = self.timeCalc(geom, elevation_rlayer)
+            attributes[time_field_idx], attributes[invers_time_field_idx] = self.timeCalc(geom)
             feature.setAttributes(attributes)
             line_vlayer.updateFeature(feature)
-        
-    
-      # Function to calculate the time and reverse time for a geometry feature 
-    def timeCalc(self, geom, rlayer):
+
+    # Function to calculate the time and reverse time for a geometry feature 
+    def timeCalc(self, geom):
         # get base velocity from GUI
         base_velocity = self.dlg.doubleSpinBox_base_velocity.value()
-        
-        # Calculate sampling interval from raster cell mean size
-        interval = self.rasterMeanPixelSize(rlayer)
-        
+
         # Set values to initial state
+        interval = self.interval
         distance = 0
         time = 0
         inverse_time = 0
         ascend = 0
         descend = 0
+        
         while distance <= geom.length():
             point = geom.interpolate(distance).asPoint()
-            point_to_raster = rlayer.dataProvider().identify(point, QgsRaster.IdentifyFormatValue)
+            point_to_raster = self.elevation_rlayer.dataProvider().identify(point, QgsRaster.IdentifyFormatValue)
             elevation = point_to_raster.results()[1]
             if distance > 0:
                 dh = elevation - last_elevation
@@ -152,9 +156,12 @@ class WalkingTime:
                     ascend += dh
                 else:
                     descend += dh
-                time += interval / self.tobblerHikingFunction(base_velocity, interval,dh) * 60 / 1000
-                inverse_time += interval / self.tobblerHikingFunction(base_velocity, interval,-dh) * 60 / 1000
-            #print time
+                # Calculate estimated velocities using  tobbler function for the segment
+                velocity = self.tobblerHikingFunction(base_velocity, interval,dh)
+                reverse_velocity = self.tobblerHikingFunction(base_velocity, interval,-dh)
+                # Add segment times  in  minutes
+                time += interval /  velocity * 60 / 1000
+                inverse_time += interval / reverse_velocity * 60 / 1000
             
             last_elevation = elevation
             distance += interval
@@ -166,10 +173,10 @@ class WalkingTime:
     def tobblerHikingFunction (self, base_vel, dx,dh):
         # - base_vel is the expected velocity in flat terrain (km/h)
         # - dx is the distance between the points
-        # - dh is the elevation diference in the same unit as the distance
+        # - dh is the elevation diference in the same units as the distance
         
         # calculates top velocity achived on gentle slope for flat terrain velocity used  
-        # The original formula top velocity was 6.0
+        # The original formula top velocity was 6.0 km/h
         top_velocity = base_vel / exp(-0.175) # -3.5*0.05
         
         # calculate segment estimated velocity (km\h)
@@ -177,8 +184,9 @@ class WalkingTime:
         
         return velocity
     
+    # calculates the average size of the raster pixel
     def rasterMeanPixelSize(self, raster):
-        r = raster
+        # calculates the average size of the raster pixel
         mean = (raster.rasterUnitsPerPixelX() + raster.rasterUnitsPerPixelY()) / 2.0
         return mean
 

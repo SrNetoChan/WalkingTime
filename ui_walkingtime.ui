@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>303</width>
-    <height>396</height>
+    <height>470</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -180,6 +180,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="text">
+           <string>rev_time</string>
+          </property>
          </widget>
         </item>
         <item row="4" column="1">
@@ -192,6 +195,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="text">
+           <string>time</string>
           </property>
          </widget>
         </item>
