@@ -89,6 +89,15 @@ class WalkingTime:
         line_vlayer = self.line_vlayer
         elevation_rlayer = self.elevation_rlayer
         
+                    
+        # test if it is possible to change line layer attribute values
+        caps = line_vlayer.dataProvider().capabilities()
+        if not(caps&QgsVectorDataProvider.ChangeAttributeValues):
+            message = QCoreApplication.translate('Walking time plugin',"It's not possbile to change the attributes of the choosen line layer. Please consider exporting in other format")
+            self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
+            return
+            
+        
         # get sampling interval from average pixel size of the elevation raster
         self.interval = self.rasterMeanPixelSize(elevation_rlayer)
         
@@ -108,30 +117,32 @@ class WalkingTime:
                 time_field_idx = n_fields - 2
                 invers_time_field_idx = n_fields - 1
             else:
-                print "Upss"
+                message = QCoreApplication.translate('Walking time plugin',"It's not possbile to add fields to the choosen line layer. Please consider exporting in other format")
+                self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
                 return
-        
-        # Future development add ascend and descend accumulations and "vertical" distance calculation
-        #distance_idx = line_vlayer.pendingFields().indexFromName('dist')
-        #ascend_idx = line_vlayer.pendingFields().indexFromName('sub_acum')
-        #descend_idx = line_vlayer.pendingFields().indexFromName('desc_acum')
-                
+               
         # See if "use selected features only" box is checked and if there are selected features in line layer
         if self.dlg.checkBox_selected_features_only.isChecked() and line_vlayer.selectedFeatureCount () > 0 :
             features = line_vlayer.selectedFeatures()
         # otherwise use all features in line layer
         else:
             features =line_vlayer.getFeatures()
-        
+
         # Iterate line layer features, calculate and fill all walking time attributes
         for feature in features:
             geom =  feature.geometry()
-            attributes = feature.attributes()
-            #attributes[distance_idx] = geom.length()
-            #attributes[time_field_idx], attributes[invers_time_field_idx], attributes[ascend_idx], attributes[descend_idx] = self.timeCalc(geom, elevation_rlayer)
-            attributes[time_field_idx], attributes[invers_time_field_idx] = self.timeCalc(geom)
-            feature.setAttributes(attributes)
-            line_vlayer.updateFeature(feature)
+            fid = feature.id()
+
+            time, time_rev = self.timeCalc(geom)
+            
+            attrs = { time_field_idx : time, invers_time_field_idx : time_rev }
+            line_vlayer.dataProvider().changeAttributeValues({ fid : attrs })
+        #update field values
+        line_vlayer.updateFields()
+        
+        # Inform user of the process ending
+        message = QCoreApplication.translate('Walking time plugin',"The process has terminated successfully.")
+        self.iface.messageBar().pushMessage("Walking time plugin",message,0,10)
 
     # Function to calculate the time and reverse time for a geometry feature 
     def timeCalc(self, geom):

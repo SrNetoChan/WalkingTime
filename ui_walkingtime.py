@@ -110,8 +110,8 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
         if 'time' in line_layer_fields:
             index = line_layer_fields.index('time')
             self.comboBox_time_field.setCurrentIndex(index)
-        if 'time_rev' in line_layer_fields:
-            index = line_layer_fields.index('time_rev')
+        if 'rev_time' in line_layer_fields:
+            index = line_layer_fields.index('rev_time')
             self.comboBox_rev_time_field.setCurrentIndex(index)
     
     def run(self):
