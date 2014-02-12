@@ -69,25 +69,23 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
         self.vector_line_layers = {}
         self.raster_layers = {}
         
-        for i in range(len(self.loaded_layers)):
-            layer = self.loaded_layers[i]
+        for layer in self.loaded_layers:
             fields_names = []
-            # select line vector layers
 
+            # select line vector layers
             if (layer.type() == layer.VectorLayer) and (layer.geometryType() == QGis.Line):
                 layer_info = [layer]
                 provider = layer.dataProvider()
                 fields = provider.fields()
                 # get vector layer fields
-                for j in range(len(fields)):
-                    fields_names.append(fields[j].name())
+                for field in fields:
+                    fields_names.append(field.name())
                 layer_info += [fields_names]
                 self.vector_line_layers[unicode(layer.name())] = layer_info
-            # select raster layers
             
+            # select raster layers
             elif layer.type() == layer.RasterLayer:
                 self.raster_layers[unicode(layer.name())] = layer
-            
             else:
                 pass
         

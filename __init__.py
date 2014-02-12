@@ -31,21 +31,21 @@ def description():
 
 
 def version():
-    return "Version 0.1"
+    return "Version 0.1.0"
 
 
 def icon():
-    return "icon.png"
+    return "icon.svg"
 
 
 def qgisMinimumVersion():
     return "2.0"
 
 def author():
-    return "Alexandre Neto / Cascais Ambiente"
+    return "Alexandre Neto"
 
 def email():
-    return "alexandre.neto@cascaisambiente.pt"
+    return "senhor.neto.gmail.com"
 
 def classFactory(iface):
     # load WalkingTime class from file WalkingTime

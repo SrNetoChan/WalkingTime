@@ -56,7 +56,7 @@ class WalkingTime:
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
-            QIcon(":/plugins/walkingtime/icon.png"),
+            QIcon(":/plugins/walkingtime/icon.svg"),
             u"WalkingTime", self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)
