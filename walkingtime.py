@@ -88,7 +88,6 @@ class WalkingTime:
         self.elevation_rlayer = self.dlg.raster_layers[self.dlg.comboBox_elevation_layer.currentText()]
         line_vlayer = self.line_vlayer
         elevation_rlayer = self.elevation_rlayer
-        
                     
         # test if it is possible to change line layer attribute values
         caps = line_vlayer.dataProvider().capabilities()
@@ -97,7 +96,6 @@ class WalkingTime:
             self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
             return
             
-        
         # get sampling interval from average pixel size of the elevation raster
         self.interval = self.rasterMeanPixelSize(elevation_rlayer)
         
@@ -117,7 +115,7 @@ class WalkingTime:
                 time_field_idx = n_fields - 2
                 invers_time_field_idx = n_fields - 1
             else:
-                message = QCoreApplication.translate('Walking time plugin',"It's not possbile to add fields to the choosen line layer. Please consider exporting in other format")
+                message = QCoreApplication.translate('Walking time plugin',"It's not possbile to add fields to the choosen line layer. Please consider exporting it to other format")
                 self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
                 return
                
@@ -148,36 +146,47 @@ class WalkingTime:
     def timeCalc(self, geom):
         # get base velocity from GUI
         base_velocity = self.dlg.doubleSpinBox_base_velocity.value()
-
-        # Set values to initial state
-        interval = self.interval
-        distance = 0
-        time = 0
-        inverse_time = 0
-        ascend = 0
-        descend = 0
+        hLength = geom.length()
         
-        while distance <= geom.length():
+        # Set values to initial state
+        endOfLine= False
+        interval = self.interval
+        distance = 0.0
+        time = 0.0
+        inverse_time = 0.0
+        ascend = 0.0
+        descend = 0.0
+        
+        while not endOfLine:
+            # last segment special case
+            if distance > hLength:
+                endOfLine = True
+                distance = hLength
+                interval = hLength % interval
+             
+            # Get elevation from point along line   
             point = geom.interpolate(distance).asPoint()
             point_to_raster = self.elevation_rlayer.dataProvider().identify(point, QgsRaster.IdentifyFormatValue)
             elevation = point_to_raster.results()[1]
+            
             if distance > 0:
                 dh = elevation - last_elevation
+                # Calculate estimated velocities using  tobbler function for the segment
+                velocity = self.tobblerHikingFunction(base_velocity, interval,dh)
+                reverse_velocity = self.tobblerHikingFunction(base_velocity, interval,-dh)
+                # increment times in minutes
+                if velocity > 0:
+                    time += interval /  velocity * 60 / 1000
+                    inverse_time += interval / reverse_velocity * 60 / 1000
+                # increment ascent and descent in meters
                 if dh > 0:
                     ascend += dh
                 else:
                     descend += dh
-                # Calculate estimated velocities using  tobbler function for the segment
-                velocity = self.tobblerHikingFunction(base_velocity, interval,dh)
-                reverse_velocity = self.tobblerHikingFunction(base_velocity, interval,-dh)
-                # Add segment times  in  minutes
-                time += interval /  velocity * 60 / 1000
-                inverse_time += interval / reverse_velocity * 60 / 1000
-            
+                    
             last_elevation = elevation
             distance += interval
-                    
-        #MUST FIX - Add last portion of the line
+            
         return time, inverse_time # Later  ascend,  descend
 
     # Adaptation of Tobblers Hiking function allowing use different base velocity
@@ -191,7 +200,10 @@ class WalkingTime:
         top_velocity = base_vel / exp(-0.175) # -3.5*0.05
         
         # calculate segment estimated velocity (km\h)
-        velocity = top_velocity * exp(-3.5 * abs(dh/dx + 0.05))
+        if dx != 0:
+            velocity = top_velocity * exp(-3.5 * abs(dh/dx + 0.05))
+        else:
+            velocity = 0
         
         return velocity
     

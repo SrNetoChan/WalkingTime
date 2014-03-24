@@ -24,11 +24,11 @@ email=senhor.neto@gmail.com
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags=
+tags= network
 
-homepage=
-tracker=
-repository=
+homepage= http://sigsemgrilhetas.wordpress.com/plugins-qgis/walking-time/
+tracker= https://github.com/SrNetoChan/WalkingTime/issues
+repository=https://github.com/SrNetoChan/WalkingTime
 icon=icon.svg
 # experimental flag
 experimental=True
