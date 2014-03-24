@@ -11,7 +11,7 @@
 [general]
 name=Walking time
 qgisMinimumVersion=2.0
-description=Adds walking time fields to linestring vector layer, based on slope derived from an elevation raster
+description=Calculate walking travel time from linestring vector layer, based on slope derived from an elevation raster
 version=0.1.0
 author=Alexandre Neto
 email=senhor.neto@gmail.com
@@ -24,7 +24,7 @@ email=senhor.neto@gmail.com
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags= network
+tags= routing, network analysis, vector
 
 homepage= http://sigsemgrilhetas.wordpress.com/plugins-qgis/walking-time/
 tracker= https://github.com/SrNetoChan/WalkingTime/issues

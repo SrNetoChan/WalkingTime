@@ -27,7 +27,7 @@ def name():
 
 
 def description():
-    return "Adds walking time fields to linestring vector layer, based on slope derived from an elevation raster"
+    return "Calculate walking travel time from linestring vector layer, based on slope derived from an elevation raster"
 
 
 def version():

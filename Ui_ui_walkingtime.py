@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/alexandre/Dropbox/Trabalho/QGIS/Plugins-QGIS/WalkingTime/ui_walkingtime.ui'
+# Form implementation generated from reading ui file 'C:\Users\alexandre.neto\Dropbox\Trabalho\Plugins QGIS\WalkingTime\ui_walkingtime.ui'
 #
-# Created: Sun Feb  9 19:21:28 2014
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Mon Mar 24 15:17:42 2014
+#      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -68,7 +68,7 @@ class Ui_WalkingTime(object):
         self.doubleSpinBox_base_velocity.setSizePolicy(sizePolicy)
         self.doubleSpinBox_base_velocity.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.doubleSpinBox_base_velocity.setSingleStep(0.1)
-        self.doubleSpinBox_base_velocity.setProperty("value", 5.0)
+        self.doubleSpinBox_base_velocity.setProperty(_fromUtf8("value"), 5.0)
         self.doubleSpinBox_base_velocity.setObjectName(_fromUtf8("doubleSpinBox_base_velocity"))
         self.gridLayout_3.addWidget(self.doubleSpinBox_base_velocity, 0, 1, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_3_parameters, 1, 0, 1, 2)

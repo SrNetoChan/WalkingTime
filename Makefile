@@ -23,7 +23,7 @@ PLUGIN_UPLOAD = $(CURDIR)/plugin_upload.py
 # Makefile for a PyQGIS plugin 
 
 # translation
-SOURCES = walkingtime.py ui_walkingtime.py __init__.py walkingtimedialog.py
+SOURCES = walkingtime.py ui_walkingtime.py __init__.py Ui_ui_walkingtime.py
 #TRANSLATIONS = i18n/walkingtime_en.ts
 TRANSLATIONS = 
 
@@ -31,9 +31,9 @@ TRANSLATIONS =
 
 PLUGINNAME = walkingtime
 
-PY_FILES = walkingtime.py walkingtimedialog.py __init__.py
+PY_FILES = walkingtime.py Ui_ui_walkingtime.py __init__.py
 
-EXTRAS = icon.png metadata.txt
+EXTRAS = icon.svg metadata.txt
 
 UI_FILES = ui_walkingtime.py
 
@@ -58,19 +58,19 @@ compile: $(UI_FILES) $(RESOURCE_FILES)
 # the Python plugin directory is located at:
 # $HOME/.qgis/python/plugins
 deploy: compile doc transcompile
-	mkdir -p $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
-	cp -vf $(PY_FILES) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
-	cp -vf $(UI_FILES) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
-	cp -vf $(RESOURCE_FILES) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
-	cp -vf $(EXTRAS) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
-	cp -vfr i18n $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
-	cp -vfr $(HELP) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)/help
+	mkdir -p $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
+	cp -vf $(PY_FILES) $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
+	cp -vf $(UI_FILES) $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
+	cp -vf $(RESOURCE_FILES) $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
+	cp -vf $(EXTRAS) $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
+	cp -vfr i18n $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)
+	cp -vfr $(HELP) $(HOME)/.qgis2/python/plugins/$(PLUGINNAME)/help
 
 # The dclean target removes compiled python files from plugin directory
 # also delets any .svn entry
 dclean:
-	find $(HOME)/.qgis/python/plugins/$(PLUGINNAME) -iname "*.pyc" -delete
-	find $(HOME)/.qgis/python/plugins/$(PLUGINNAME) -iname ".svn" -prune -exec rm -Rf {} \;
+	find $(HOME)/.qgis2/python/plugins/$(PLUGINNAME) -iname "*.pyc" -delete
+	find $(HOME)/.qgis2/python/plugins/$(PLUGINNAME) -iname ".svn" -prune -exec rm -Rf {} \;
 
 # The derase deletes deployed plugin
 derase:
@@ -80,7 +80,7 @@ derase:
 # content. You can then upload the zip file on http://plugins.qgis.org
 zip: deploy dclean 
 	rm -f $(PLUGINNAME).zip
-	cd $(HOME)/.qgis/python/plugins; zip -9r $(CURDIR)/$(PLUGINNAME).zip $(PLUGINNAME)
+	cd $(HOME)/.qgis2/python/plugins; zip -9r $(CURDIR)/$(PLUGINNAME).zip $(PLUGINNAME)
 
 # Create a zip package of the plugin named $(PLUGINNAME).zip. 
 # This requires use of git (your plugin development directory must be a 
