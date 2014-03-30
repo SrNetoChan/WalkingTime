@@ -12,7 +12,7 @@
 name=Walking time
 qgisMinimumVersion=2.0
 description=Calculate walking travel time from linestring vector layer, based on slope derived from an elevation raster
-version=0.1.0
+version=0.1.1
 author=Alexandre Neto
 email=senhor.neto@gmail.com
 
@@ -21,7 +21,7 @@ email=senhor.neto@gmail.com
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
-# changelog=
+changelog=Added plugin description to help users understand what it does
 
 # tags are comma separated with spaces allowed
 tags= routing, network analysis, vector
@@ -32,6 +32,8 @@ repository=https://github.com/SrNetoChan/WalkingTime
 icon=icon.svg
 # experimental flag
 experimental=True
+
+about=The Walking time is a QGIS python plugin that uses Tobbler’s hiking function to estimate the travel time along a line depending on the slope. The input data required are a vector layer with lines and a raster layer with elevation values. One can adjust the base velocity (on flat terrain) according to the type of walking or walker. By default, the value used is 5 km \ h. The plugin update or create fields with estimated time in minutes in forward and in reverse direction. One can run the plugin for all elements of the vector layer, or only on selected routes. The plugin can also been used to prepare a network (graph) to perform network analysis when the use of travel walking time as cost is intended.
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
