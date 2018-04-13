@@ -11,6 +11,7 @@
 [general]
 name=Walking time
 qgisMinimumVersion=2.0
+agisMaximumVersion=2.18
 description=Calculate walking travel time from linestring vector layer, based on slope derived from an elevation raster
 version=0.1.1
 author=Alexandre Neto
