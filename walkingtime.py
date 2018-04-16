@@ -84,7 +84,7 @@ class WalkingTime:
         else:
             pass
 
-         # use layers according to dialog comboboxes
+        # use layers according to dialog comboboxes
         self.line_vlayer = self.dlg.vector_line_layers[self.dlg.comboBox_line_layer.currentText()][0]
         self.elevation_rlayer = self.dlg.raster_layers[self.dlg.comboBox_elevation_layer.currentText()]
         line_vlayer = self.line_vlayer
@@ -93,7 +93,7 @@ class WalkingTime:
         # test if it is possible to change line layer attribute values
         caps = line_vlayer.dataProvider().capabilities()
         if not(caps&QgsVectorDataProvider.ChangeAttributeValues):
-            message = QCoreApplication.translate('Walking time plugin',"It's not possbile to change the attributes of the choosen line layer. Please consider exporting in other format")
+            message = tr('Walking time plugin',"It's not possbile to change the attributes of the choosen line layer. Please consider exporting in other format")
             self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
             return
             
@@ -116,7 +116,7 @@ class WalkingTime:
                 time_field_idx = n_fields - 2
                 invers_time_field_idx = n_fields - 1
             else:
-                message = QCoreApplication.translate('Walking time plugin',"It's not possbile to add fields to the choosen line layer. Please consider exporting it to other format")
+                message = tr('Walking time plugin',"It's not possbile to add fields to the choosen line layer. Please consider exporting it to other format")
                 self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
                 return
                
@@ -140,7 +140,7 @@ class WalkingTime:
         line_vlayer.updateFields()
         
         # Inform user of the process ending
-        message = QCoreApplication.translate('Walking time plugin',"The process has terminated successfully.")
+        message = tr('Walking time plugin',"The process has terminated successfully.")
         self.iface.messageBar().pushMessage("Walking time plugin",message,0,10)
 
     # Function to calculate the time and reverse time for a geometry feature 
@@ -213,4 +213,8 @@ class WalkingTime:
         # calculates the average size of the raster pixel
         mean = (raster.rasterUnitsPerPixelX() + raster.rasterUnitsPerPixelY()) / 2.0
         return mean
+
+    def tr(self, text):
+        # Translation abbreviation
+        return QCoreApplication.translate(text)
 
