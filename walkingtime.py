@@ -3,7 +3,7 @@
 /***************************************************************************
  Walking Time
                                  A QGIS plugin
- Calculates walking time and other trails values into fields in a  linestring
+ Calculates walking time and other trails values into fields in a linestring
  vector layer, based on slope derived from an elevation raster
                               -------------------
         begin                : 2013-09-27
@@ -12,19 +12,20 @@
  ***************************************************************************/
 
 ****************************************************************************
- *                                                                                                                   *
- *   This program is free software; you can redistribute it and/or modify      *
- *   it under the terms of the GNU General Public License as published by   *
- *   the Free Software Foundation; either version 2 of the License, or           *
- *   (at your option) any later version.                                                           *
- *                                                                                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
  ***************************************************************************
 """
 # Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from math import *
+from PyQt4.QtCore import QTranslator, QSettings, qVersion, QCoreApplication,\
+    QVariant
+from PyQt4.QtGui import QAction, QIcon
+from qgis.core import QgsVectorDataProvider, QgsRaster, QgsField
+from math import exp
 # Initialize Qt resources from file resources.py
 import resources_rc
 # Import the code for the dialog
@@ -193,7 +194,7 @@ class WalkingTime:
     def tobblerHikingFunction (self, base_vel, dx,dh):
         # - base_vel is the expected velocity in flat terrain (km/h)
         # - dx is the distance between the points
-        # - dh is the elevation diference in the same units as the distance
+        # - dh is the elevation difference in the same units as the distance
         
         # calculates top velocity achived on gentle slope for flat terrain velocity used  
         # The original formula top velocity was 6.0 km/h
