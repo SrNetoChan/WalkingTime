@@ -20,20 +20,21 @@
  *                                                                         *
  ***************************************************************************
 """
+from __future__ import absolute_import
+from builtins import object
 # Import the PyQt and QGIS libraries
-from PyQt4.QtCore import QTranslator, QSettings, qVersion, QCoreApplication,\
-    QVariant
-from PyQt4.QtGui import QAction, QIcon
+from qgis.PyQt.QtCore import QTranslator, QSettings, qVersion, QCoreApplication, QVariant
+from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtGui import QIcon
 from qgis.core import QgsVectorDataProvider, QgsRaster, QgsField
 from math import exp
-# Initialize Qt resources from file resources.py
-import resources_rc
+
 # Import the code for the dialog
-from ui_walkingtime import WtPluginDialog
+from .ui_walkingtime import WtPluginDialog
 import os.path
 
 
-class WalkingTime:
+class WalkingTime(object):
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -57,8 +58,9 @@ class WalkingTime:
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
-            QIcon(":/plugins/walkingtime/icon.svg"),
-            u"WalkingTime", self.iface.mainWindow())
+            QIcon(os.path.join(self.plugin_dir, "icon.svg")),
+            u"WalkingTime",
+            self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)
 
@@ -93,7 +95,9 @@ class WalkingTime:
         # test if it is possible to change line layer attribute values
         caps = line_vlayer.dataProvider().capabilities()
         if not(caps&QgsVectorDataProvider.ChangeAttributeValues):
-            message = tr('Walking time plugin',"It's not possbile to change the attributes of the choosen line layer. Please consider exporting in other format")
+            message = self.tr("It's not possbile to change the attributes of "
+                              "the chosen line layer. Please consider "
+                              "exporting into other format")
             self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
             return
             
@@ -116,7 +120,9 @@ class WalkingTime:
                 time_field_idx = n_fields - 2
                 invers_time_field_idx = n_fields - 1
             else:
-                message = tr('Walking time plugin',"It's not possbile to add fields to the choosen line layer. Please consider exporting it to other format")
+                message = self.tr("It's not possible to add fields to the "
+                                  "chosen line layer. Please consider "
+                                  "exporting it into other format")
                 self.iface.messageBar().pushMessage("Walking time plugin",message,1,10)
                 return
                
@@ -140,7 +146,7 @@ class WalkingTime:
         line_vlayer.updateFields()
         
         # Inform user of the process ending
-        message = tr('Walking time plugin',"The process has terminated successfully.")
+        message = self.tr("The process has terminated successfully.")
         self.iface.messageBar().pushMessage("Walking time plugin",message,0,10)
 
     # Function to calculate the time and reverse time for a geometry feature 
@@ -216,5 +222,5 @@ class WalkingTime:
 
     def tr(self, text):
         # Translation abbreviation
-        return QCoreApplication.translate(text)
+        return QCoreApplication.translate('Walking time plugin', text)
 

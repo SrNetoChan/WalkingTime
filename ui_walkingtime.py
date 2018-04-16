@@ -20,11 +20,20 @@
  *                                                                         *
  ***************************************************************************
 """
+from __future__ import absolute_import
+from builtins import str
 
-from PyQt4.QtGui import QDialog
-from Ui_ui_walkingtime import Ui_WalkingTime
+from qgis.PyQt import uic
+from qgis.PyQt.QtWidgets import QDialog
+from qgis.core import QgsProject
+import os
 
-class WtPluginDialog(QDialog, Ui_WalkingTime):
+
+pluginPath = os.path.dirname(__file__)
+WIDGET, BASE = uic.loadUiType(
+    os.path.join(pluginPath, 'ui_walkingtime.ui'))
+
+class WtPluginDialog(BASE, WIDGET):
     """
     Class documentation goes here.
     """
@@ -37,8 +46,8 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
         self.iface = iface
         
         self.mc = self.iface.mapCanvas()
-        self.legend=self.iface.legendInterface()
-        self.loaded_layers = self.legend.layers()
+        #self.legend = self.iface.legendInterface()
+        self.loaded_layers = [layer for layer in QgsProject.instance().mapLayers().values()]
         
         # UI CCONNECTORS
         self.buttonBox_ok_cancel.accepted.connect(self.run)
@@ -70,7 +79,7 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
             fields_names = []
 
             # select line vector layers
-            if (layer.type() == layer.VectorLayer) and (layer.geometryType() == QGis.Line):
+            if (layer.type() == layer.VectorLayer) and (layer.geometryType() == 1):
                 layer_info = [layer]
                 provider = layer.dataProvider()
                 fields = provider.fields()
@@ -78,11 +87,11 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
                 for field in fields:
                     fields_names.append(field.name())
                 layer_info += [fields_names]
-                self.vector_line_layers[unicode(layer.name())] = layer_info
+                self.vector_line_layers[str(layer.name())] = layer_info
             
             # select raster layers
             elif layer.type() == layer.RasterLayer:
-                self.raster_layers[unicode(layer.name())] = layer
+                self.raster_layers[str(layer.name())] = layer
             else:
                 pass
         
@@ -112,4 +121,3 @@ class WtPluginDialog(QDialog, Ui_WalkingTime):
     def run(self):
         pass
         return
-        

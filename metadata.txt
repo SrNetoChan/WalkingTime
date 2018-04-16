@@ -10,9 +10,9 @@
 
 [general]
 name=Walking time
-qgisMinimumVersion=2.0
-description=Calculate walking travel time from linestring vector layer, based on slope derived from an elevation raster
-version=0.1.1
+qgisMinimumVersion=3.0
+description=Using an DEM to measure the slope, calculates the time (in minutes) needed to walk through a linestring features.
+version=0.2
 author=Alexandre Neto
 email=senhor.neto@gmail.com
 
@@ -21,10 +21,14 @@ email=senhor.neto@gmail.com
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
-changelog=Added plugin description to help users understand what it does
+changelog=
+    0.1.1
+    Added plugin description to help users understand what it does
+    0.2
+    Ported to QGIS 3
 
 # tags are comma separated with spaces allowed
-tags= routing, network analysis, vector
+tags= routing, network analysis, vector, time, walk, hike
 
 homepage= http://sigsemgrilhetas.wordpress.com/plugins-qgis/walking-time/
 tracker= https://github.com/SrNetoChan/WalkingTime/issues
